@@ -35,10 +35,20 @@ namespace bliss::ecs
 	class Texture : public Component
 	{
 	public:
-		Texture(SDL_Renderer& p_SdlRendererRef, const std::filesystem::path& p_TextureAtlasPath);
+		Texture(SDL_Renderer& p_SdlRendererRef, const std::filesystem::path& p_TexturePath);
 		virtual ~Texture();
 
 	private:
-		SDL_Texture* m_TextureAtlas {nullptr};
+		SDL_Texture* m_Texture {nullptr};
+	};
+
+	class TextureAtlas : public Component
+	{
+	public:
+	    TextureAtlas(SDL_Renderer& p_SdlRendererRef, const std::filesystem::path& p_TextureAtlasPath);
+		~TextureAtlas();
+
+	private:
+	    SDL_Texture* m_TextureAtlas {nullptr};
 	};
 }

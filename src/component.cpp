@@ -21,10 +21,10 @@ namespace bliss::ecs
 		return m_Scale;
 	}
 
-	Texture::Texture(SDL_Renderer& p_SdlRendererRef, const std::filesystem::path& p_TextureAtlasPath)
-		: m_TextureAtlas(IMG_LoadTexture(&p_SdlRendererRef, p_TextureAtlasPath.string().c_str()))
+	Texture::Texture(SDL_Renderer& p_SdlRendererRef, const std::filesystem::path& p_TexturePath)
+		: m_Texture(IMG_LoadTexture(&p_SdlRendererRef, p_TexturePath.string().c_str()))
 	{
-		if (!m_TextureAtlas)
+		if (!m_Texture)
 		{
 			throw std::runtime_error("Failed to load texture atlas. Error: " + std::string(SDL_GetError()));
 		}
@@ -32,6 +32,6 @@ namespace bliss::ecs
 
 	Texture::~Texture()
 	{
-		if (m_TextureAtlas) SDL_DestroyTexture(m_TextureAtlas);
+		if (m_Texture) SDL_DestroyTexture(m_Texture);
 	}
 }

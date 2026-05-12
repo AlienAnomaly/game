@@ -10,11 +10,28 @@ namespace bliss::core
 
 	void GameContext::Run()
 	{
+	    uint64_t start{0}, end{0};
+		uint64_t current{0}, previous{SDL_GetPerformanceCounter()};
+
 		while (m_Running)
 		{
+		    start = SDL_GetPerformanceCounter();
+
 			PollEvents();
 			Update();
 			Render();
+
+			end = SDL_GetPerformanceCounter();
+			double frame_time = static_cast<double>(end - start) / SDL_GetPerformanceFrequency();
+
+			if (frame_time < (1.0f / 60.0f))
+			{
+			    SDL_Delay(((1.0f / 60.0f) - frame_time) * 1000.0f);
+			}
+
+			current = SDL_GetPerformanceCounter();
+			m_DeltaTime = static_cast<double>(current - previous) / SDL_GetPerformanceFrequency();
+			previous = current;
 		}
 	}
 
@@ -36,9 +53,9 @@ namespace bliss::core
 	{
 		SDL_Event event;
 		while (SDL_PollEvent(&event) != 0)
-		{	
+		{
 			switch (event.type)
-			{	
+			{
 			case SDL_EVENT_QUIT:
 				m_Running = false;
 				break;

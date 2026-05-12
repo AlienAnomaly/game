@@ -13,6 +13,7 @@ namespace bliss::core
 	private:
 		const SdlContext& m_SdlContextRef;
 		bool m_Running { true };
+		double m_DeltaTime { 0.0 };
 
 	private:
 		void Run();
